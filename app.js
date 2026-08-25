@@ -9,12 +9,93 @@ $('postBtn').onclick=()=>{let text=$('caption').value.trim(),f=$('photo').files[
 window.like=id=>{let p=posts.find(x=>x.id===id);p.likes++;save();render()};
 window.comment=id=>{let i=$('c'+id),t=i.value.trim();if(!t)return;posts.find(x=>x.id===id).comments.push({name:user.name,text:t});save();render()};
 window.profile=()=>{
-  const name=prompt("Your name:",user.name)||user.name;
-  const bio=prompt("Your bio:",user.bio)||user.bio;
-  user={name,bio};
+  $('#feed').innerHTML=`
+    <div class="profile-page">
+
+      <div class="profile-head">
+        <button onclick="render()">←</button>
+        <h2>${esc(user.name)}</h2>
+        <span>⋮</span>
+      </div>
+
+      <div class="profile-info">
+        <div class="profile-avatar">👤</div>
+
+        <div class="profile-stats">
+          <div>
+            <b>${posts.length}</b>
+            <span>Posts</span>
+          </div>
+
+          <div>
+            <b>${posts.reduce((n,p)=>n+(p.likes||0),0)}</b>
+            <span>Likes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-bio">
+        <b>${esc(user.name)}</b>
+        <p>${esc(user.bio)}</p>
+      </div>
+
+      <button class="edit-profile" onclick="editProfile()">
+        Edit Profile
+      </button>
+
+      <div class="profile-tabs">
+        <span>▦</span>
+        <span>▤</span>
+        <span>♙</span>
+      </div>
+
+      <div class="profile-grid">
+        ${posts.map(p=>p.photo ? `
+          <img src="${p.photo}" onclick="openPost('${p.id}')">
+        ` : '').join('')}
+      </div>
+
+    </div>
+  `;
+};
+
+window.editProfile=()=>{
+  $('#feed').innerHTML=`
+    <div class="profile-page">
+
+      <div class="profile-head">
+        <button onclick="profile()">←</button>
+        <h2>Edit Profile</h2>
+        <span></span>
+      </div>
+
+      <div class="edit-box">
+
+        <div class="profile-avatar big">👤</div>
+
+        <label>Name</label>
+        <input id="editName" value="${esc(user.name)}">
+
+        <label>Bio</label>
+        <textarea id="editBio">${esc(user.bio)}</textarea>
+
+        <button onclick="saveProfile()">Save Profile</button>
+
+      </div>
+    </div>
+  `;
+};
+
+window.saveProfile=()=>{
+  const name=$('#editName').value.trim();
+  const bio=$('#editBio').value.trim();
+
+  if(name) user.name=name;
+  if(bio) user.bio=bio;
+
   localStorage.setItem(U,JSON.stringify(user));
-  alert("Profile saved!\nName: "+user.name+"\nBio: "+user.bio);
-  render();
-}
+
+  profile();
+};
 $('search').oninput=render;render(); 
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
