@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111111"><link rel="manifest" href="manifest.json">
+<title>2Gram</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><b>2Gram</b><input id="search" placeholder="Search"></header>
+<main>
+<section class="composer"><textarea id="caption" placeholder="What's happening?"></textarea>
+<input id="photo" type="file" accept="image/*"><button id="postBtn">Post</button></section>
+<section id="feed"></section>
+</main>
+<nav><button onclick="top.scrollTo(0,0)">🏠 Home</button><button onclick="document.getElementById('caption').focus()">➕ Post</button><button onclick="profile()">👤 Profile</button></nav>
+<script src="app.js"></script>
+</body></html>
