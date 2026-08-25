@@ -8,6 +8,6 @@ function render(){let q=$('search').value.toLowerCase();$('feed').innerHTML=post
 $('postBtn').onclick=()=>{let text=$('caption').value.trim(),f=$('photo').files[0];if(!text&&!f)return alert('Write something or choose a photo.');let add=img=>{posts.unshift({id:Date.now().toString(),text,img:img||'',likes:0,comments:[],time:Date.now()});save();$('caption').value='';$('photo').value='';render()};if(f){let r=new FileReader();r.onload=()=>add(r.result);r.readAsDataURL(f)}else add('')};
 window.like=id=>{let p=posts.find(x=>x.id===id);p.likes++;save();render()};
 window.comment=id=>{let i=$('c'+id),t=i.value.trim();if(!t)return;posts.find(x=>x.id===id).comments.push({name:user.name,text:t});save();render()};
-window.profile=()=>{let n=prompt('Your name:',user.name);if(n!==null){user.name=n.trim()||'2Gram User';localStorage.setItem(U,JSON.stringify(user));render()}};
+window.profile=()=>{alert("Profile\nName: "+user.name+"\nBio: "+user.bio)}
 $('search').oninput=render;render();
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
