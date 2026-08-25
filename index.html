@@ -12,6 +12,10 @@
 <input id="photo" type="file" accept="image/*"><button id="postBtn">Post</button></section>
 <section id="feed"></section>
 </main>
-<nav><button onclick="top.scrollTo(0,0)">🏠 Home</button><button onclick="document.getElementById('caption').focus()">➕ Post</button><button onclick="profile()">👤 Profile</button></nav>
+<nav>
+  <button onclick="render()">🏠 Home</button>
+  <button onclick="document.getElementById('caption').focus()">➕ Post</button>
+  <button onclick="profile()">👤 Profile</button>
+</nav>
 <script src="app.js"></script>
 </body></html>
